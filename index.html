@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#05070c">
+  <meta name="description" content="Simulador de bateria de poder inspirado nas Tropas dos Lanternas.">
+  <title>Lanterna de Poder | Juramentos</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div id="app" class="app" data-corps="green">
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="stars" id="stars" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <a class="brand" href="#inicio">
+        <span class="brand-symbol">◉</span>
+        <span class="brand-copy">
+          <strong>LANTERNA</strong>
+          <small>DE PODER</small>
+        </span>
+      </a>
+
+      <div class="top-actions">
+        <span id="systemStatus" class="system-status">
+          <span class="status-dot"></span>
+          SISTEMA PRONTO
+        </span>
+        <button id="settingsButton" class="icon-button" aria-label="Configurações">⚙</button>
+      </div>
+    </header>
+
+    <main id="inicio" class="main-content">
+      <section class="intro">
+        <div class="eyebrow">SISTEMA DE ENERGIA EMOCIONAL</div>
+        <h1>Seu juramento.<br><span>Seu poder.</span></h1>
+        <p>Pronuncie o juramento de sua Tropa para ativar a bateria de poder.</p>
+      </section>
+
+      <section class="corps-selector" aria-labelledby="corpsTitle">
+        <div class="section-heading">
+          <h2 id="corpsTitle">Escolha sua Tropa</h2>
+          <span id="corpsCount">11 espectros</span>
+        </div>
+        <div id="corpsGrid" class="corps-grid"></div>
+      </section>
+
+      <section class="power-section" aria-label="Bateria de poder">
+        <div id="powerChamber" class="power-chamber">
+          <div class="power-halo"></div>
+          <div class="power-rings ring-one"></div>
+          <div class="power-rings ring-two"></div>
+          <div class="power-rings ring-three"></div>
+          <div class="power-beam"></div>
+
+          <div id="powerCore" class="power-core">
+            <div class="core-inner">
+              <div id="corpsSymbol" class="corps-symbol">◉</div>
+            </div>
+          </div>
+
+          <div class="power-progress">
+            <div class="progress-label">
+              <span>NÍVEL DE ENERGIA</span>
+              <strong id="powerPercent">0%</strong>
+            </div>
+            <div class="progress-track">
+              <div id="powerFill" class="progress-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="power-information">
+          <span id="corpsEmotion" class="emotion-tag">FORÇA DE VONTADE</span>
+          <h2 id="corpsName">Tropa dos Lanternas Verdes</h2>
+          <p id="corpsDescription">
+            A vontade é a força que supera o medo.
+          </p>
+          <div id="powerMessage" class="power-message" aria-live="polite">
+            Aguardando juramento...
+          </div>
+        </div>
+      </section>
+
+      <section class="voice-panel">
+        <div class="section-heading">
+          <h2>Reconhecimento de juramento</h2>
+          <span id="microphoneState">MICROFONE INATIVO</span>
+        </div>
+
+        <div class="voice-card">
+          <div id="voiceVisualizer" class="voice-visualizer" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
+
+          <p id="transcript" class="transcript" aria-live="polite">
+            Pressione o botão e recite o juramento.
+          </p>
+
+          <button id="listenButton" class="primary-button">
+            <span>🎙</span>
+            <span id="listenButtonText">INICIAR RECONHECIMENTO</span>
+          </button>
+
+          <div class="voice-options">
+            <label for="languageSelect">Idioma</label>
+            <select id="languageSelect">
+              <option value="pt-BR">Português (Brasil)</option>
+              <option value="en-US">English (US)</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="manual-panel">
+        <div class="section-heading">
+          <h2>Ativação manual</h2>
+          <span>MODO DE TESTE</span>
+        </div>
+        <p>Ative a bateria sem usar o microfone.</p>
+        <div class="manual-actions">
+          <button id="chargeButton" class="secondary-button">⚡ CARREGAR ANEL</button>
+          <button id="resetButton" class="outline-button">REINICIAR</button>
+          <button id="fullscreenButton" class="outline-button">TELA CHEIA</button>
+        </div>
+      </section>
+
+      <section class="oath-panel">
+        <div class="section-heading">
+          <h2>Juramentos cadastrados</h2>
+          <span>PERSONALIZÁVEL</span>
+        </div>
+        <p>
+          Cadastre o texto integral dos juramentos que deseja reconhecer.
+          Você pode incluir versões em português e inglês.
+        </p>
+
+        <div class="oath-editor">
+          <label for="oathCorps">Tropa</label>
+          <select id="oathCorps"></select>
+
+          <label for="oathLanguage">Idioma do juramento</label>
+          <select id="oathLanguage">
+            <option value="pt-BR">Português</option>
+            <option value="en-US">Inglês</option>
+          </select>
+
+          <label for="oathText">Texto do juramento</label>
+          <textarea id="oathText" rows="6" placeholder="Cole aqui o juramento completo..."></textarea>
+
+          <div class="editor-actions">
+            <button id="saveOathButton" class="primary-button">SALVAR JURAMENTO</button>
+            <button id="clearOathButton" class="outline-button">LIMPAR</button>
+          </div>
+          <p id="editorFeedback" class="editor-feedback" aria-live="polite"></p>
+        </div>
+        <div id="savedOaths" class="saved-oaths"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <strong>LANTERNA DE PODER</strong>
+      <p>Projeto de fã não oficial, sem afiliação com DC Comics ou Warner Bros.</p>
+      <small>Versão experimental 1.0 · HTML + CSS + JavaScript</small>
+    </footer>
+
+    <div id="settingsModal" class="modal" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <section class="modal-content" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <div class="modal-heading">
+          <h2 id="settingsTitle">Configurações</h2>
+          <button id="closeSettingsButton" class="icon-button" aria-label="Fechar">✕</button>
+        </div>
+
+        <label class="toggle-row">
+          <span>Vibração ao carregar</span>
+          <input id="vibrationToggle" type="checkbox" checked>
+        </label>
+
+        <label class="toggle-row">
+          <span>Efeitos sonoros</span>
+          <input id="soundToggle" type="checkbox" checked>
+        </label>
+
+        <label class="toggle-row">
+          <span>Animações de energia</span>
+          <input id="animationToggle" type="checkbox" checked>
+        </label>
+
+        <label class="toggle-row">
+          <span>Brilho máximo durante a carga</span>
+          <input id="brightnessToggle" type="checkbox" checked>
+        </label>
+
+        <button id="resetSettingsButton" class="outline-button">RESTAURAR CONFIGURAÇÕES</button>
+      </section>
+    </div>
+
+    <div id="chargeOverlay" class="charge-overlay" aria-hidden="true">
+      <div class="charge-overlay-content">
+        <div id="overlaySymbol" class="overlay-symbol">◉</div>
+        <div id="overlayCorps" class="overlay-corps">LANTERNAS VERDES</div>
+        <div id="overlayPercent" class="overlay-percent">0%</div>
+        <div id="overlayStatus" class="overlay-status">CARREGANDO ANEL</div>
+        <button id="closeChargeButton" class="overlay-close">FECHAR</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
